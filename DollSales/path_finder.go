@@ -24,7 +24,25 @@ func main() {
 			path := []Street{s}
 			append(paths, path)
 		}
+		// Keep track of how many nodes I'm currently looking at
+		var totalNodes = len(nodesToCheck)
+		var pathCompletionStatus = FoundTargetList(len(nodesToCheck))
 
+		// Loop through the list removing nodes as it checks them
+		for len(neighborhood) > 0 {
+			var streetToCheck = start;
+			var streetToRemove = ""
+			var nextStreetToRemove = ""
+			var nextPath = ""
+			var totalAddedPaths = 0
+
+			for i := 0; i < len(nodesToCheck); i++ {
+				if pathCompletionStatus {
+					continue
+				}
+				else if()
+			}
+		}
 	}
 
 }
@@ -39,7 +57,7 @@ func FoundTargetList(numberOfStartingStreets int) []bool {
 	return boolArr
 }
 
-// Find target in array or streets stemming from node
+// Find target in streets stemming from a node
 func FindStreet(streets []Street, target string) bool {
 	for _, v := range streets {
 		if v.To == target {
