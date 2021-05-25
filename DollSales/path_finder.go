@@ -11,6 +11,8 @@ type Street struct {
 }
 
 func main() {
+
+	//Fan out from the root location, removing nodes as they are checked
 	var FindPath PathFinder = func(startLocation, targetLocation string, streets []Street) (distance int, path []string) {
 		// Keep original array intact
 		neighborhood := streets
@@ -18,6 +20,7 @@ func main() {
 		var paths [][]Street
 		// Keep track of this to know when to add a new path array or when to add to existing one
 		var addedPaths = 0
+		var currentSearchLevel = 0
 
 		// Create inital array of paths to be added to later
 		for _, s := range nodesToCheck {
@@ -36,13 +39,55 @@ func main() {
 			var nextPath = ""
 			var totalAddedPaths = 0
 
+			//Loop through possible streets from root
 			for i := 0; i < len(nodesToCheck); i++ {
+				// Skip if path is complete or deadend or if target is found, add it to path
 				if pathCompletionStatus {
 					continue
+				} else if (HasTarget(nodesToCheck)) {
+					var foundTarget street = FindStreet(nodesToCheck, target);
+					append(paths[i], foundTarget)
+					pathCompletionStatus[i] = true
 				}
-				else if()
+
+				//loop through inner nodes
+				for j := 0; j < totalNodes; j++ {
+					//figure out if the path leg needs a new path or if it can be added to existing path
+					if j > currentSearchLevel {
+						newPath := paths[i]
+						append(newPath, nodesToCheck[j])
+						//Add completion status for new path
+						append(pathCompletionStatus, false)
+					} else {
+						append(paths[j], nodesToCheck[j])
+					}
+				}
+
+				if i != totalNodes {
+					if(nextStreetToRemove != "") {
+						streetToRemove = nextStreetToRemove
+					} else {
+						streetToRemove = paths[i][len(paths[i]) - 1].From
+					}
+					// Reset
+					var nextIndex = 0
+					var nextLegIndexStart []Street = paths[nextIndex]
+					var nextStreet Street = paths[nextIndex][nextLegIndexStart]
+					nextPath = nextNode.To
+					nextStreetToRemove = nextPath;
+					neighborhood = RemoveNode(streetToRemove, neighborhood)
+					nodesToCheck = PossiblePathList(nextPath, nCopy)
+				}
 			}
+			totalAddedPaths += addedPaths
+			totalNodes += addedPaths
+			addedPaths = 0
+			currentLevel++
 		}
+		// From here I wanted to remove the paths that didnt end at the target, 
+		// tally up the distances for each, and then return the one with the least distance
+		almost := [...]String {"One", "more", "day"}
+		return 0, almost
 	}
 
 }
@@ -52,7 +97,7 @@ func FoundTargetList(numberOfStartingStreets int) []bool {
 	var boolArr [numberOfStartingStreets]bool
 
 	for i := 0; i < numberOfStartingStreets; i++ {
-		boolArr[i] := false
+		boolArr[i] = false
 	}
 	return boolArr
 }
@@ -97,4 +142,13 @@ func PossiblePathList(from string, streets []Street) []Street {
 		}
 	}
 	return arr
+}
+
+func HasTarget(possibleStreets []Street, target string) {
+	for _, s := possibleStreets {
+		if s.To == target {
+			return true
+		}
+	}
+	return false
 }
