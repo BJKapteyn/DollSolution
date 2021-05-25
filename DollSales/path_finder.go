@@ -86,7 +86,7 @@ func main() {
 		}
 		// From here I wanted to remove the paths that didnt end at the target, 
 		// tally up the distances for each, and then return the one with the least distance
-		almost := [...]String {"One", "more", "day"}
+		almost := [...]String {"Thanks for", " the fun", " weekend."}
 		return 0, almost
 	}
 
