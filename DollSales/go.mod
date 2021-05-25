@@ -1,3 +1,4 @@
-module github.com/bluemedorapublic/dolldelivery
+module example.com/DollSales
+
 
 go 1.15

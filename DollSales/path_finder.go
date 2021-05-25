@@ -9,3 +9,33 @@ type Street struct {
 	To       string
 	Distance int
 }
+
+// Find target in array or streets stemming from node
+func FindStreet(streets []Street, target string) bool {
+	for _, v := range streets {
+		if v.To == target {
+			return true
+		}
+	}
+	return false
+}
+
+// Calculate distances of a full path
+func CalculateDistance(path []Street) {
+	var distance = 0
+
+	for _, v := range path {
+		distance += v.Distance
+	}
+}
+
+// Create a list for next possible nodes.
+func NextNodelist(from string, streets []Street) []Street {
+	var arr []Street
+	for _, v := range streets {
+		if v.From == from {
+			arr = append(arr, v)
+		}
+	}
+	return arr
+}
